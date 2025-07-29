@@ -7,6 +7,9 @@ This simple app allows you to create organized to-do lists and cross off items w
 
 Or at least it will when it's ready.
 
+Now.
+Let's start 👏 Checkin' 👏 Off 👏 Boxes!!!
+
 ## Instructions
 
 1. `django-admin makemigrations`
