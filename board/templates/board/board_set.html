@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Boards</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+<h1>Boards</h1>
+{% for board in boards %}
+    <div class="BoardDetailCard">
+        <h2>{{ board.name }}</h2>
+        <p class="CreatedDateTime">Created: {{ board.created_datetime }}</p>
+        <p>It would be nice to see the number of tasks</p>
+        <form action="/boards/{{ board.id }}">
+            <input type="submit" value="View">
+        </form>
+    </div>
+{% endfor %}
+</body>
+</html>

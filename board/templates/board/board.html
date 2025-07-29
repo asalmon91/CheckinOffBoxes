@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ board.name }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+<form action="/boards/">
+    <input type="submit" value="Boards">
+</form>
+<h1>{{ board.name }}</h1>
+
+
+</body>
+</html>
