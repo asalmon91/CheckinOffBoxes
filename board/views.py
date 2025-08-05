@@ -1,13 +1,18 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-from django.views import View, generic
+from collections import defaultdict
 
-from board.models import Board, TaskState, Task
+from django.http import HttpResponse, Http404
+from django.shortcuts import redirect
+from django.shortcuts import render
+from django.views import View
+from django.views.generic import FormView, ListView, DetailView
+
+from board.models import Board, TaskState, Task, TaskForm, BoardForm
 
 
 # Create your views here.
 def example_view(request):
     return HttpResponse("Hello, world")
+
 
 def create_example_board(request):
     board_model_manager = Board.objects
@@ -38,20 +43,64 @@ def create_example_board(request):
     response = t.name
     return HttpResponse(response)
 
+
 class MainView(View):
 
     def get(self, request, *args, **kwargs):
-        context = {'user_name': 'Alex'}
-        return render(
-        request,
-        'base.html',
-        context)
+        # context = {'user_name': 'Alex'}
+        return redirect('boards/')
 
-class BoardListView(generic.ListView):
+
+class BoardListView(ListView):
     model = Board
     context_object_name = 'boards'
     template_name = 'board/board_set.html'
 
-class BoardView(generic.DetailView):
+
+class BoardView(DetailView):
     model = Board
     template_name = 'board/board.html'
+
+
+class BoardFormView(FormView):
+    form_class = BoardForm
+    template_name = "board/board_form.html"
+    success_url = "/boards/board"
+    initial = {
+        'name': '',
+        'description': ''
+    }
+
+    board_list = defaultdict(list)
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        author = 'Anonymous'
+        if request.user.is_authenticated:
+            author = request.user.username
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            board = form.cleaned_data['board']
+            self.board_list[author].append(board)
+            return redirect('/')
+        return None
+
+    def delete(self, request, board, *args, **kwargs):
+        author = 'Anonymous'
+        if request.user.is_authenticated:
+            author = request.user.username
+
+        if board in self.board_list[author]:
+            self.board_list[author].remove(board)
+        else:
+            raise Http404
+        return redirect('/')
+
+
+class TaskFormView(FormView):
+    form_class = TaskForm
+    template_name = "board/task_form.html"
+    success_url = "/board/task"

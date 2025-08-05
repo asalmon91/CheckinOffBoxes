@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="The most satisfying task list ever conceived.">
+    <title>Checking Off Boxes</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link
+            rel="icon"
+            sizes="16x16 32x32 48x48"
+            type="image/svg+xml"
+            href="{% static 'img/icons/circle-check-solid-full.svg' %}"
+    />
+</head>
+<body>
+<header>
+    <div style="display:flex; align-items: center; padding: 5px">
+        <a href="/">
+            <img height="32px" width="32px"
+                 src="{% static 'img/icons/house-chimney-window-solid-full.svg' %}"
+                 alt="Home">
+        </a>
+        <span class="site-name">Checking Off Boxes!</span>
+    </div>
+    <img height="32px" width="32px"
+         src="{% static 'img/icons/circle-user-solid-full.svg' %}" alt="profile picture"
+         title="User authentication not yet implemented">
+</header>
+<nav class="left-sidebar"></nav>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+<aside class="right-sidebar"></aside>
+<footer>
+    <div class="footer-container">
+        <span class="copyright">
+            &copy;2025 Alexander Salmon. All Rights Reserved.
+        </span>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,33 +1,63 @@
-body {
-    font-family: "Arial", sans-serif;
+:root {
+    --darkest: #000f0f;
+    --normal-10: #00331f;
+    --normal-15: #004d2e;
+    --normal-20: #00663d;
+    --normal-25: #00804d;
+    --normal-30: #00995c;
+    --normal-50: #00ff99;
+    --normal-90: #ccffeb;
+    background-color: var(--darkest);
     color: ghostwhite;
-    background: #050C0F;
+    font-family: "Arial", sans-serif;
 }
+
+/*body {*/
+/*    background: var(--darkest);*/
+/*    font-family: "Arial", sans-serif;*/
+/*    color: ghostwhite;*/
+/*}*/
 
 h2 {
     margin: 0;
 }
 
-div.BoardDetailCard {
-    background: #1F4A5B;
-    border: 2px solid #57A6C6;
+div.COBCard {
+    background: var(--normal-15);
+    border: 2px solid var(--normal-50);
     border-radius: 4px;
     padding: 20px;
     width: fit-content;
-    transition: background-color 0.5s ease-in-out;
     box-shadow: 5px 5px 5px #ffffff30;
+    margin: auto 0;
+}
+
+div.BoardDetailCard {
+    transition: background-color 0.5s ease-in-out;
 }
 
 div.BoardDetailCard:hover {
-    background: #2F5A6B;
+    background: var(--normal-20);
 }
 
-input[type="submit"] {
+button, input[type="submit"] {
     background-color: transparent;
-    border: 2px solid #57A6C6;
+    border: 2px solid var(--normal-90);
     color: ghostwhite;
     padding: 5px 10px;
     border-radius: 4px;
+    transition: background-color 0.5s ease-in-out;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #ffffff3a;
+    cursor: pointer;
+}
+
+.buttonbar {
+    display: flex;
+    padding: 5px;
+    justify-content: right;
 }
 
 p.CreatedDateTime {
@@ -35,4 +65,40 @@ p.CreatedDateTime {
     color: darkgray;
     font-style: italic;
     margin: 0;
+}
+
+input[type="text"], textarea {
+    background-color: transparent;
+    color: ghostwhite;
+    font-family: Arial, sans-serif;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+input[type="text"] {
+    width: 16em;
+}
+
+textarea {
+    background-color: transparent;
+    width: 32em;
+    height: 3em;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #00ff99;
+}
+
+.site-name {
+    font-size: 32px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.copyright {
+    color: gray;
+    font-size: x-small;
 }
