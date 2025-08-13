@@ -1,18 +1,39 @@
 {% extends 'board/base.html' %}
+{% load static %}
 
 {% block content %}
     <h1>Boards</h1>
-    <a href="/boards/boardform/">
-        <button>Create New Board</button>
-    </a>
-    {% for board in boards %}
-        <div class="COBCard BoardDetailCard">
-            <h2>{{ board.name }}</h2>
-            <p class="CreatedDateTime">Created: {{ board.created_datetime }}</p>
-            <p>It would be nice to see the number of tasks</p>
-            <form action="/boards/{{ board.id }}">
-                <input type="submit" value="View">
-            </form>
+    <div style="display: grid; gap: 10px">
+        <a href="/boards/boardform/">
+            <button><i class="fa-solid fa-plus" style="margin-right: 5px;"></i>New Board</button>
+        </a>
+        <div style="display: grid; gap: 10px;">
+            {% for board in boards %}
+                <div class="COBCard BoardDetailCard">
+                    <div id="board-title-bar"
+                         style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span class="EntityTitle">{{ board.name }}</span>
+                        <button id="boardSettings" type="button">
+                            <i class="fa-solid fa-gear"></i>
+                        </button>
+                        <div class="ContextMenu" id="contextMenu">
+                            <ul>
+                                <li><a href="{% url 'edit-board' board.id %}">Edit</a></li>
+                                <li class="separator"></li>
+                                <li><a href="{% url 'delete-board' board.id %}">Delete</a></li>
+                            </ul>
+                        </div>
+                        <script src="{% static 'js/context_menu.js' %}"></script>
+                    </div>
+                    <p class="CreatedDateTime">Created: {{ board.created_datetime }}</p>
+                    <p>Tasks: {{ board.task_count }}</p>
+                    <div class="buttonbar">
+                        <button type="button" onclick="window.location.href='/boards/{{ board.id }}'">
+                            Open
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+    </div>
 {% endblock %}

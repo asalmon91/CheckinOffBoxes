@@ -1,17 +1,31 @@
 from collections import defaultdict
 
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView, LogoutView
+from django.db.models import Count
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import FormView, ListView, DetailView
+from django.views.generic import FormView, ListView, DetailView, CreateView, DeleteView
 
 from board.models import Board, TaskState, Task, TaskForm, BoardForm
 
 
-# Create your views here.
-def example_view(request):
-    return HttpResponse("Hello, world")
+class COBSignupView(CreateView):
+    form_class = UserCreationForm
+    success_url = '/'  # login?
+    template_name = 'board/signup.html'
+
+
+class COBLoginView(LoginView):
+    redirect_authenticated_user = True
+    template_name = 'board/login.html'
+
+
+class COBLogoutView(LogoutView):
+    pass
 
 
 def create_example_board(request):
@@ -47,7 +61,6 @@ def create_example_board(request):
 class MainView(View):
 
     def get(self, request, *args, **kwargs):
-        # context = {'user_name': 'Alex'}
         return redirect('boards/')
 
 
@@ -55,6 +68,11 @@ class BoardListView(ListView):
     model = Board
     context_object_name = 'boards'
     template_name = 'board/board_set.html'
+
+    def get_queryset(self):
+        return super().get_queryset().annotate(
+            task_count=Count('task_states__tasks', distinct=True)
+        )
 
 
 class BoardView(DetailView):
@@ -65,7 +83,7 @@ class BoardView(DetailView):
 class BoardFormView(FormView):
     form_class = BoardForm
     template_name = "board/board_form.html"
-    success_url = "/boards/board"
+    success_url = "/boards/"
     initial = {
         'name': '',
         'description': ''
@@ -74,7 +92,14 @@ class BoardFormView(FormView):
     board_list = defaultdict(list)
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class(initial=self.initial)
+        if kwargs:
+            board = Board.objects.filter(id=kwargs['pk']).first()
+            form = self.form_class(initial={
+                'name': board.name,
+                'description': board.description
+            })
+        else:
+            form = self.form_class(initial=self.initial)
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
@@ -83,9 +108,15 @@ class BoardFormView(FormView):
             author = request.user.username
         form = self.form_class(request.POST)
         if form.is_valid():
-            board = form.cleaned_data['board']
-            self.board_list[author].append(board)
-            return redirect('/')
+            board_data = form.cleaned_data
+            if kwargs:
+                board = Board.objects.filter(id=kwargs['pk']).first()
+                board.name = board_data['name']
+                board.description = board_data['description']
+            else:
+                board = Board(**board_data)
+            board.save()
+            return redirect('/boards/')
         return None
 
     def delete(self, request, board, *args, **kwargs):
@@ -98,6 +129,12 @@ class BoardFormView(FormView):
         else:
             raise Http404
         return redirect('/')
+
+
+class BoardDeleteView(DeleteView):
+    model = Board
+    template_name = "board/board_confirm_delete.html"
+    success_url = reverse_lazy("board-set")
 
 
 class TaskFormView(FormView):

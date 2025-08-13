@@ -5,4 +5,22 @@
         <input type="submit" value="Boards">
     </form>
     <h1>{{ board.name }}</h1>
+    <p>{{ board.description }}</p>
+    <div class="TaskBoard">
+        {% for task_state in board.task_states.all %}
+            <div class="TaskStateCol">
+                <p class="EntityTitle">{{ task_state }} ({{ task_state.tasks.all|length }})</p>
+                {% for task in task_state.tasks.all %}
+                    {% if forloop.counter0 == 0 %}
+                        <form action="/boards/taskform/">
+                            <input style="margin-bottom: 10px" type="submit" value="+">
+                        </form>
+                    {% endif %}
+                    <div class="COBCard TaskCard">
+                        <span>{{ task.name }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

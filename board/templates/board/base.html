@@ -13,20 +13,17 @@
             type="image/svg+xml"
             href="{% static 'img/icons/circle-check-solid-full.svg' %}"
     />
+    <script src="https://kit.fontawesome.com/d0f093b8bc.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
     <div style="display:flex; align-items: center; padding: 5px">
-        <a href="/">
-            <img height="32px" width="32px"
-                 src="{% static 'img/icons/house-chimney-window-solid-full.svg' %}"
-                 alt="Home">
+        <a class="ImageLink" href="/">
+            <span class="fa-solid fa-house-chimney" style="font-size: 32px;"></span>
         </a>
         <span class="site-name">Checking Off Boxes!</span>
     </div>
-    <img height="32px" width="32px"
-         src="{% static 'img/icons/circle-user-solid-full.svg' %}" alt="profile picture"
-         title="User authentication not yet implemented">
+    <i class="fa-solid fa-circle-user" style="font-size: 32px;" title="User authentication not yet implemented"></i>
 </header>
 <nav class="left-sidebar"></nav>
 <main>

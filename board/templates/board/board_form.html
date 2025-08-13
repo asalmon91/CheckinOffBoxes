@@ -3,11 +3,11 @@
 {% block content %}
     <h1>Create a Board</h1>
     <div class="COBCard">
-        <form action="/boards" method="post"> {% csrf_token %}
+        <form action="" method="post"> {% csrf_token %}
             <table>{{ form.as_table }}</table>
             <br>
             <div class="buttonbar">
-                <input type="submit" value="OK">
+                <input type="submit" value="Save">
                 <button type="button" onclick="window.location.href='/boards/'">Cancel</button>
             </div>
         </form>

@@ -12,11 +12,17 @@
     font-family: "Arial", sans-serif;
 }
 
-/*body {*/
-/*    background: var(--darkest);*/
-/*    font-family: "Arial", sans-serif;*/
-/*    color: ghostwhite;*/
-/*}*/
+i {
+    color: var(--normal-50);
+}
+
+a.ImageLink {
+    color: var(--normal-50);
+}
+
+a.ImageLink:visited {
+    color: var(--normal-50);
+}
 
 h2 {
     margin: 0;
@@ -27,17 +33,18 @@ div.COBCard {
     border: 2px solid var(--normal-50);
     border-radius: 4px;
     padding: 20px;
-    width: fit-content;
     box-shadow: 5px 5px 5px #ffffff30;
     margin: auto 0;
-}
-
-div.BoardDetailCard {
     transition: background-color 0.5s ease-in-out;
 }
 
-div.BoardDetailCard:hover {
+div.COBCard:hover {
     background: var(--normal-20);
+}
+
+.BoardDetailCard {
+    margin-bottom: 10px;
+    width: 250px;
 }
 
 button, input[type="submit"] {
@@ -56,7 +63,7 @@ button:hover, input[type="submit"]:hover {
 
 .buttonbar {
     display: flex;
-    padding: 5px;
+    gap: 5px;
     justify-content: right;
 }
 
@@ -89,7 +96,20 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    border-bottom: 1px solid #00ff99;
+    border-bottom: 1px solid var(--normal-50);
+    top: 0;
+    width: 100%;
+}
+
+main {
+    margin-left: auto;
+    margin-right: auto;
+    width: 640px;
+    height: 100vh;
+    padding: 20px;
+    background-color: #ccffff1a;
+    border-left: 1px solid var(--normal-50);
+    border-right: 1px solid var(--normal-50)
 }
 
 .site-name {
@@ -101,4 +121,90 @@ header {
 .copyright {
     color: gray;
     font-size: x-small;
+}
+
+footer {
+    /*position: fixed;*/
+    bottom: 0;
+    border-top: 1px solid var(--normal-50);
+}
+
+.TaskBoard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+}
+
+.TaskStateCol {
+    border-left: 1px solid var(--normal-50);
+    /*display: grid;*/
+    /*justify-content: center;*/
+    padding: 5px;
+    text-align: center;
+}
+
+hr {
+    background-color: var(--normal-50);
+    height: 1px;
+    border: none;
+}
+
+.TaskStateCol:last-of-type {
+    border-right: 1px solid var(--normal-50);
+}
+
+.EntityTitle {
+    font-size: 16pt;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+}
+
+.TaskCard {
+    display: inline-block;
+    margin: 5px auto;
+}
+
+.ContextMenu {
+    display: none;
+    position: absolute;
+    background-color: var(--normal-15);
+    min-width: 160px;
+    z-index: 1000;
+    border: 1px solid var(--normal-50);
+}
+
+.ContextMenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ContextMenu li a {
+    color: whitesmoke;
+    padding: 5px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.ContextMenu li a:hover {
+    background-color: var(--normal-20);
+}
+
+.ContextMenu .separator {
+    border-top: 1px solid var(--normal-50);
+    margin: 5px 0;
+}
+
+/* Class to show the menu */
+.ContextMenu.show {
+    display: block;
+}
+
+button.delete {
+    border-color: rosybrown;
+}
+
+i.delete {
+    color: rosybrown;
 }

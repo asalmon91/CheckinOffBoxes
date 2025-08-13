@@ -1,0 +1,18 @@
+{% extends 'board/base.html' %}
+
+{% block content %}
+    <h1>
+        <i class="fa-solid fa-warning"></i>
+        Delete Board
+        <i class="fa-solid fa-warning"></i>
+    </h1>
+    <p>Are you sure you want to delete the board: "{{ board.name }}"?</p>
+    <p><em>This action cannot be undone!</em></p>
+    <form method="post"> {% csrf_token %}
+        <button class="delete" type="submit">
+            <i class="fa-solid fa-trash delete" style="margin-right: 5px;"></i>
+            Delete
+        </button>
+        <button type="button" onclick="window.location.href='/boards/'">Cancel</button>
+    </form>
+{% endblock %}
